@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "servers_dmf_mf_demo_sqldb_server_name": {
-            "defaultValue": "dmf-mf-demo-sqldb-server",
+            "defaultValue": "dmf-mf-demo-sqldb-arm-test",
             "type": "String"
         }
     },
@@ -12,7 +12,7 @@
         {
             "type": "Microsoft.Sql/servers/databases",
             "apiVersion": "2019-06-01-preview",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo')]",
+            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-2-amsolomo')]",
             "location": "eastus",
             "tags": {
                 "sqldb": "dmj-mf"
