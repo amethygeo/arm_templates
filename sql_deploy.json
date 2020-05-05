@@ -1,203 +1,203 @@
-{"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "servers_dmf_mf_demo_sqldb_server_name": {
-            "defaultValue": "dmf-mf-demo-sqldb-arm-test",
-            "type": "String"
-        }
-    },
-    "variables": {},
-    "resources": [
-        {
-            "type": "Microsoft.Sql/servers/databases",
-            "apiVersion": "2019-06-01-preview",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-2-amsolomo')]",
-            "location": "eastus",
-            "tags": {
-                "sqldb": "dmj-mf"
-            },
-            "sku": {
-                "name": "GP_Gen5",
-                "tier": "GeneralPurpose",
-                "family": "Gen5",
-                "capacity": 2
-            },
-            "kind": "v12.0,user,vcore",
-            "properties": {
-                "collation": "SQL_Latin1_General_CP1_CI_AS",
-                "maxSizeBytes": 21474836480,
-                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
-                "zoneRedundant": false,
-                "licenseType": "LicenseIncluded",
-                "readScale": "Disabled",
-                "readReplicaCount": 0,
-                "storageAccountType": "GRS"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/CreateIndex')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/DbParameterization')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/DefragmentIndex')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/DropIndex')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/ForceLastGoodPlan')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/auditingPolicies",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
-            "location": "East US",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "auditingState": "Disabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/auditingSettings",
-            "apiVersion": "2017-03-01-preview",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "state": "Disabled",
-                "retentionDays": 0,
-                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000",
-                "isStorageSecondaryKeyInUse": false,
-                "isAzureMonitorTargetEnabled": false
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
-            "apiVersion": "2017-10-01-preview",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "retentionDays": 7
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/extendedAuditingSettings",
-            "apiVersion": "2017-03-01-preview",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "state": "Disabled",
-                "retentionDays": 0,
-                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000",
-                "isStorageSecondaryKeyInUse": false,
-                "isAzureMonitorTargetEnabled": false
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
-            "location": "East US",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "state": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
-            "apiVersion": "2018-06-01-preview",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "state": "Disabled",
-                "disabledAlerts": [
-                    ""
-                ],
-                "emailAddresses": [
-                    ""
-                ],
-                "emailAccountAdmins": false,
-                "retentionDays": 0
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/current')]",
-            "location": "East US",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "status": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/vulnerabilityAssessments",
-            "apiVersion": "2017-03-01-preview",
-            "name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
-            ],
-            "properties": {
-                "recurringScans": {
-                    "isEnabled": false,
-                    "emailSubscriptionAdmins": true
-                }
-            }
-        }
-    ]
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"servers_dmf_mf_demo_sqldb_server_name": {
+			"defaultValue": "dmf-mf-demo-sqldb-arm-test",
+			"type": "String"
+		}
+	},
+	"variables": {},
+	"resources": [{
+			"type": "Microsoft.Sql/servers/databases",
+			"apiVersion": "2019-06-01-preview",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-2-amsolomo')]",
+			"location": "eastus",
+			"tags": {
+				"sqldb": "dmj-mf"
+			},
+			"sku": {
+				"name": "GP_Gen5",
+				"tier": "GeneralPurpose",
+				"family": "Gen5",
+				"capacity": 2
+			},
+			"kind": "v12.0,user,vcore",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 21474836480,
+				"catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+				"zoneRedundant": false,
+				"licenseType": "LicenseIncluded",
+				"readScale": "Disabled",
+				"readReplicaCount": 0,
+				"storageAccountType": "GRS"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/advisors",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/CreateIndex')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"autoExecuteValue": "Disabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/advisors",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/DbParameterization')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"autoExecuteValue": "Disabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/advisors",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/DefragmentIndex')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"autoExecuteValue": "Disabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/advisors",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/DropIndex')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"autoExecuteValue": "Disabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/advisors",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/ForceLastGoodPlan')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"autoExecuteValue": "Enabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/auditingPolicies",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
+			"location": "East US",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"auditingState": "Disabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/auditingSettings",
+			"apiVersion": "2017-03-01-preview",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"state": "Disabled",
+				"retentionDays": 0,
+				"storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000",
+				"isStorageSecondaryKeyInUse": false,
+				"isAzureMonitorTargetEnabled": false
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
+			"apiVersion": "2017-10-01-preview",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/default')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"retentionDays": 7
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/extendedAuditingSettings",
+			"apiVersion": "2017-03-01-preview",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"state": "Disabled",
+				"retentionDays": 0,
+				"storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000",
+				"isStorageSecondaryKeyInUse": false,
+				"isAzureMonitorTargetEnabled": false
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
+			"location": "East US",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"state": "Enabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+			"apiVersion": "2018-06-01-preview",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"state": "Disabled",
+				"disabledAlerts": [
+					""
+				],
+				"emailAddresses": [
+					""
+				],
+				"emailAccountAdmins": false,
+				"retentionDays": 0
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
+			"apiVersion": "2014-04-01",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/current')]",
+			"location": "East US",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"status": "Enabled"
+			}
+		},
+		{
+			"type": "Microsoft.Sql/servers/databases/vulnerabilityAssessments",
+			"apiVersion": "2017-03-01-preview",
+			"name": "[concat(parameters('servers_dmf_mf_demo_sqldb_server_name'), '/sqldb-1-amsolomo/Default')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Sql/servers/databases', parameters('servers_dmf_mf_demo_sqldb_server_name'), 'sqldb-1-amsolomo')]"
+			],
+			"properties": {
+				"recurringScans": {
+					"isEnabled": false,
+					"emailSubscriptionAdmins": true
+				}
+			}
+		}
+	]
 }
